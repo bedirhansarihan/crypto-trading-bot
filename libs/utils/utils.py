@@ -26,3 +26,6 @@ class StrategyLoader():
                     strategies[obj_ref.__name__] = obj_ref  # TODO OBJ_REF IS REFERENCE NOT OBJECT ITSELF
 
         return strategies
+
+
+
