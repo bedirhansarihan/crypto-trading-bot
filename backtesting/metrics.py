@@ -1,11 +1,15 @@
 from abc import ABC, abstractmethod
 
-class Metric(ABC):
-
+class PerformanceMetric(ABC):
     @abstractmethod
-    def evaluate(self):
+    def evaluate(self, df):
+        """ df have open, high, low, close, volume, signal columns """
+
         pass
 
 
-class PNL():
-    pass
+class PNL(PerformanceMetric):
+
+    def evaluate(self, df):
+
+        pass

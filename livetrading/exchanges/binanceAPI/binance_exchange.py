@@ -9,4 +9,3 @@ class BinanceExchange(Exchange, BaseClient):
     pass
 
 
-BinanceExchange.get_exchange_info()
