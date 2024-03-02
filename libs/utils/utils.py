@@ -27,5 +27,18 @@ class StrategyLoader():
 
         return strategies
 
+class UserInput:
+
+    @staticmethod
+    def input_parameters(strategy_instance: Strategy) -> None:
+
+        for param_code, param in strategy_instance.__PARAMETERS_INFO__.items():
+            while True:
+                try:
+                    strategy_instance.parameters[param_code] = param["type"](input(param["name"] + ": "))
+                    break
+                except ValueError:
+                    continue
+
 
 

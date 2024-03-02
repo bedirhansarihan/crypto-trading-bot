@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from strategy import Strategy
+from .strategy import Strategy
 import talib
 
 
@@ -11,6 +11,7 @@ class ProfitMaximizerStrategy(Strategy):
         "atr_length": {"name": "ATR Length", "type": int, 'min': 5, 'max': 70},
         "atr_multiplier": {"name": "ATR multiplier", "type": float, 'min': 1.0, 'max': 5.0, 'decimals': 1},
     }
+
 
     def apply_strategy(self, df: pd.DataFrame) -> pd.DataFrame:
         last_row = len(df)

@@ -1,5 +1,6 @@
-from libs.utils.utils import StrategyLoader
-
+from libs.utils.utils import StrategyLoader, UserInput
+from libs.data_fetcher import DataFetcher
+from strategies.profit_maximizer_strategy import ProfitMaximizerStrategy
 
 class Backtester:
     _instance = None
@@ -11,7 +12,19 @@ class Backtester:
 
     def __init__(self):
         self.strategies = StrategyLoader().load_strategies()  # references
+        self.data_fetcher = DataFetcher()
 
+    def start(self):
+        pass
+
+
+    def single_test(self, strategy_instance):
+        df = self.data_fetcher.get_historical_klines_as_dataframe('BTCUSDT', '1h')
+
+        UserInput.input_parameters(strategy_instance)
+        print(strategy_instance.apply_strategy(df))
 
 if __name__ == '__main__':
-    x = Backtester()
+    b = Backtester()
+    pm = ProfitMaximizerStrategy()
+    b.single_test(pm)
