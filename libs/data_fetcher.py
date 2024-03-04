@@ -1,7 +1,7 @@
 import typing
 from binance import client, enums
 from dataclasses import dataclass
-from pandas import DataFrame
+import pandas as pd
 from numpy import ndarray, array
 
 
@@ -31,13 +31,18 @@ class DataFetcher:
         return candles
 
     def get_historical_klines_as_dataframe(self, symbol: str, interval: str, start_str=None, end_str=None,
-                                           limit=1000) -> DataFrame:
+                                           limit=1000) -> pd.DataFrame:
         requests = self.client.get_historical_klines(symbol, interval, start_str, end_str, limit,
                                                      klines_type=self.klines_type)
-        df = DataFrame(requests)
-        df.columns = ['timeframe', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote', 'nof_trades',
-                      'buy_base', 'buy_quote', 'unused']
-        df.drop(columns=['close_time', 'quote', 'nof_trades', 'buy_base', 'buy_quote', 'unused'], inplace=True)
+        df = pd.DataFrame(requests, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'closeTime',
+                                             'quoteAssetVolume', 'numberOfTrades', 'takerBuyBaseVol',
+                                             'takerBuyQuoteVol',
+                                             'ignore'])
+        df = df.drop(
+            ['closeTime', 'quoteAssetVolume', 'numberOfTrades', 'takerBuyBaseVol', 'takerBuyQuoteVol', 'ignore'],
+            axis=1)
+        df[['open', 'high', 'low', 'close', 'volume']] = df[['open', 'high', 'low', 'close', 'volume']].apply(
+            pd.to_numeric, errors='coerce')
         return df
 
     def get_historical_klines_as_ndarray(self, symbol: str, interval: str, start_str=None, end_str=None,
