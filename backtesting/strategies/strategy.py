@@ -43,7 +43,7 @@ class Strategy(ABC):
     @abstractmethod
     def apply_strategy(self, df: pd.DataFrame) -> pd.DataFrame:
         """ The returned dataframe must have a signal column and a value of 1 or -1
-            Dataframe 'df' has open high low close timestamp columns              """
+            Dataframe 'df' has timestamp open high low close signal columns              """
 
         pass
 

@@ -1,5 +1,4 @@
 def validate_parameters_info(parameters_info) -> None:
-
     if parameters_info is None:
         raise NotImplementedError(f"Concrete class must define '__PARAMETERS_INFO__' attribute.")
 
@@ -28,6 +27,7 @@ def validate_parameters_info(parameters_info) -> None:
                 raise ValueError(f"Integer parameter '{key}' requires 'min' and 'max' in __PARAMETERS_INFO__.")
         else:
             raise ValueError(f"Unsupported type '{value['type']}' for parameter '{key}' in __PARAMETERS_INFO__.")
+
 
 def validate_parameters(key_val: tuple, parameters: dict, parameters_info: dict) -> None:
     if key_val[0] in parameters:
