@@ -1,7 +1,10 @@
+import typing
+
+from libs.utils.parameter_generator import generate_parameters
 from libs.utils.utils import StrategyLoader
 from libs.utils.data_fetcher import DataFetcher
-from strategies.profit_maximizer_strategy import ProfitMaximizerStrategy
 from metrics import ProfitAndLoss
+from strategies.profit_maximizer_strategy import ProfitMaximizerStrategy
 
 
 class Backtester:
@@ -23,6 +26,8 @@ class Backtester:
         df = self.data_fetcher.get_historical_klines_as_dataframe('LTCUSDT', '1h')
         pnl = ProfitAndLoss()
         pnl.evaluate(strategy_instance.apply_strategy(df))
+
+
 
 
 if __name__ == '__main__':
