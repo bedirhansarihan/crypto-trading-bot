@@ -2,7 +2,7 @@ import typing
 from abc import ABC, abstractmethod
 
 
-class PerformanceMetricsCollector:
+class PerformanceEvaluator:
     def __init__(self, metrics):
         self.metrics = metrics
         self.results = {}
@@ -13,10 +13,12 @@ class PerformanceMetricsCollector:
             self.results[metric_name] = result
 
 
-class PerformanceMetric(ABC):
+# TODO check whether value should be added or not
 
-    def __init__(self):
-        self.value = None
+class PerformanceMetric(ABC):
+    P_INF = 9999
+    N_INF = -9999
+
     @abstractmethod
     def evaluate(self, applied_df) -> typing.Any:
         pass
@@ -24,7 +26,14 @@ class PerformanceMetric(ABC):
 
 class ProfitAndLoss(PerformanceMetric):
     def evaluate(self, applied_df):
-        pass
+        applied_df["pnl"] = applied_df["close"].pct_change() * applied_df["signal"].shift(1)
+        applied_df["cum_sum"] = applied_df['pnl'].cumsum()
+        applied_df['final_pnl'] = applied_df['cum_sum'].where(applied_df['signal'] != applied_df['signal'].shift(), None)
+        final_pnl = applied_df['final_pnl'].dropna().iloc[-1]
+
+        # Sonuçları yazdır
+        pnl = round(final_pnl, 2)
+        return pnl if pnl > 0 and pnl < 2 else self.N_INF  # TODO OR EKLENDI
 
 
 class MaximumDrawdown(PerformanceMetric):

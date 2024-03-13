@@ -2,12 +2,13 @@ import pandas as pd
 import numpy as np
 from .strategy import Strategy
 import talib
-from libs.utils.decorators import timer
+from libs.utils.decorators import timer, validate_param_info
+
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', 99)
 
 
-
+@validate_param_info
 class ProfitMaximizerStrategy(Strategy):
     __PARAMETERS_INFO__ = {
         "ma_type": {"name": "Moving Average Type (ema, sma)", "type": str, 'list': ['EMA', 'SMA'], 'default': 'SMA'},
@@ -67,3 +68,7 @@ class ProfitMaximizerStrategy(Strategy):
         df.fillna(0, inplace=True)
 
         return df
+
+
+
+

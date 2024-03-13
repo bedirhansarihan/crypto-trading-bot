@@ -4,6 +4,7 @@ from ..strategies.strategy import Strategy
 from libs.utils.parameter_generator import generate_parameters
 from algorithm import Algorithm
 
+
     
 class Nsga2(Algorithm):
 
@@ -13,5 +14,5 @@ class Nsga2(Algorithm):
         self.strategy_class = strategy_class
         self.population_params = []
 
-    def run_algorithm(self):
+    def run_algorithm(self) -> None:
         pass

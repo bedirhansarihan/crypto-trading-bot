@@ -1,4 +1,10 @@
 from time import time
+from libs.utils.validators import validate_parameters_info
+
+
+def create_buy_sell_signal(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
 
 def timer(func):
     def time_wrapper(*args, **kwargs):
@@ -11,7 +17,8 @@ def timer(func):
     return time_wrapper
 
 
+def validate_param_info(cls):
+    validate_parameters_info(cls.__PARAMETERS_INFO__)
+    return cls
 
-def create_buy_sell_signal(func):
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
+
